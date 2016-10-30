@@ -19,12 +19,12 @@ class Model(db.Model):
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
-    brand_name = db.Column(db.String(50), db.ForeignKey('brand.name'), nullable=True)
+    brand_name = db.Column(db.String(50), db.ForeignKey('brands.name'))
     name = db.Column(db.String(50), nullable=False)
 
 
     def __repr__(self):
-        return "<Model name = %s, brand_name = %s>" % (self.name, self.brand_name)
+        return "<Model name = %s, brand_name = %s, year = %i>" % (self.name, self.brand_name, self.year)
 
 
 class Brand(db.Model):
@@ -34,15 +34,15 @@ class Brand(db.Model):
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
-    founded = db.Column(db.Integer, nullable=True)
-    headquarters = db.Column(db.String(50), nullable=True)
-    discontinued = db.Column(db.Integer, nullable=True)
+    founded = db.Column(db.Integer)
+    headquarters = db.Column(db.String(50))
+    discontinued = db.Column(db.Integer)
 
-    model = db.relationship('Model', backref='brand')
+    models = db.relationship('Model', backref='brands')
 
 
     def __repr__(self):
-        return "<Brand id = %i, name = %s>" % (self.id, self.name)
+        return "<Brand id = %i, name = %s, founded = %s, headquarters = %s, discontinued = %s>" % (self.id, self.name, self.founded, self.headquarters, self.discontinued)
 
 # End Part 1
 
